@@ -4,49 +4,44 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"minicrm_Verdiane/internal/app"
-	"minicrm_Verdiane/internal/storage"
 	"os"
-	"strings"
+	"minicrm_Verdiane/internal/storage"
 )
 
 func main() {
-	// Flags
-	name := flag.String("name", "", "Nom du client")
-	email := flag.String("email", "", "Email du client")
-	useMemory := flag.Bool("memory", false, "Utiliser stockage en mémoire (par défaut JSON)")
-	flag.Parse()
-
-	// Choix du backend de stockage
-	var store storage.Storer
-	var err error
-
-	if *useMemory {
-		store = storage.NewMemoryStorage()
-	} else {
-		store, err = storage.NewJSONStorage("clients.json")
-		if err != nil {
-			log.Fatal("Impossible d'initialiser le stockage JSON :", err)
-		}
+	if len(os.Args) < 2 {
+		log.Fatal("Veuillez spécifier une commande: add ou list")
 	}
 
-	// Mode "ajout rapide via flags"
-	if strings.TrimSpace(*name) != "" || strings.TrimSpace(*email) != "" {
-		n := strings.TrimSpace(*name)
-		e := strings.TrimSpace(*email)
-		if n == "" || e == "" {
-			fmt.Println("Erreur : Merci de renseigner -name et -email pour une saisie unique :)")
-			os.Exit(1)
+	command := os.Args[1]
+
+	store, err := storage.NewGORMStore("clients.db")
+	if err != nil {
+		log.Fatal("Erreur connexion DB:", err)
+	}
+
+	switch command {
+	case "add":
+		addCmd := flag.NewFlagSet("add", flag.ExitOnError)
+		name := addCmd.String("name", "", "Nom du client")
+		email := addCmd.String("email", "", "Email du client")
+		addCmd.Parse(os.Args[2:])
+
+		if *name == "" || *email == "" {
+			log.Fatal("Merci de fournir --name et --email")
 		}
-		client := &storage.Client{Name: n, Email: e}
+
+		client := &storage.Client{Name: *name, Email: *email}
 		if err := store.Add(client); err != nil {
-			fmt.Println("Erreur ajout:", err)
-			os.Exit(1)
+			log.Fatal("Erreur ajout:", err)
 		}
-		fmt.Printf("Client '%s' ajouté avec succès ! ID %d via flags\n", n, client.ID)
-		return
-	}
+		fmt.Println("Client ajouté:", client)
 
-	// Sinon → on lance le menu interactif
-	app.Run(store)
+	case "list":
+		all, _ := store.GetAll()
+		fmt.Println("Clients en DB:", all)
+
+	default:
+		log.Fatal("Commande inconnue:", command)
+	}
 }

@@ -33,3 +33,10 @@ Pour tester cette branche, faire :
 - git checkout persJson
 - go run cmd/crm/main.go
 ** Résulatat : Les nouveaux clients seront ajoutés dans un fichier JSON.
+
+5. Évolutions : branche bddGorm
+Cette version intègre l'ajout d'une base de données avec Gorm
+Pour tester faire
+- git checkout bddGorm
+- go run ./cmd/crm add --name "Le_nom-du_client" --email "son@dresse.com"
+Résultat : Client ajouté: &{ID Le_nom-du_client son@dresse.com}
