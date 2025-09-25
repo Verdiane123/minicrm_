@@ -13,8 +13,11 @@ Ajouter d'un client via des flags (`-name`, `-email`)
 ## Installation
 ```bash
 git clone https://github.com/Verdiane123/minicrm_.git
+git checkout main
 Exécuter en lançant la commande "go run main.go"
 Utiliser les flags en faisant ''go run main.go -name="Verdiane" -email="verdiane@verdiane.fr"''
+Résultat: le client est créé soit via un menu interactif soit en ligne de commande
+
 
 
 
