@@ -1,3 +1,12 @@
+    *******************CRM VERDIANE*******************************
+Les fonctionnalités varient d'une branche à une autre.
+Faire des checkout et voir leur readme pour tester le fonctionnement du code
+main : script basique de création des clients via un menu interactif et des flags
+persJson : CRM modulaire avec stockage des clients dans un fichier Json
+bddGorm : ajout d'une BDD avec Gorm
+cliCobra : création d'une cli professionnelle avec Cobra et Viper
+
+
 # Mini CRM Verdiane — Go
 
 Gestionnaire de contacts clients avec GO
@@ -17,6 +26,9 @@ git checkout main
 Exécuter en lançant la commande "go run main.go"
 Utiliser les flags en faisant ''go run main.go -name="Verdiane" -email="verdiane@verdiane.fr"''
 Résultat: le client est créé soit via un menu interactif soit en ligne de commande
+
+
+
 
 
 
