@@ -40,3 +40,16 @@ Pour tester faire
 - git checkout bddGorm
 - go run ./cmd/crm add --name "Le_nom-du_client" --email "son@dresse.com"
 Résultat : Client ajouté: &{ID Le_nom-du_client son@dresse.com}
+
+
+6. Évolutions : branche cliCobra
+Cette version intègre la création d'une CLI Professionnelle avec Cobra & Viper
+Pour tester faire :
+- git checkout cliCobra
+- go run . add --name "Le_client" --email "client@client.com" # Pour ajouter un client
+- go run . list # Pour les lister
+- go run . update --id 1 --name "Le_client" --email "client@client.com" # Mettre à jour un client
+- go run . delete --id 5 # Pour supprimer le client avec l'id 5
+Résultat : Client ajouté ou mis à jour ou supprimé ou clients listés
+
+*********************************************MERCI******************

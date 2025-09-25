@@ -1,0 +1,4 @@
+storage:
+  type: "gorm"     
+  db_file: "clients.db"
+  json_file: "clients.json"
